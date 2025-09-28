@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Каталог с обувки</h2>
+
+<div class="search-filter-box">
+  <form method="get" action="{{ url_for('catalog.catalog') }}">
+    <input type="text" name="q" placeholder="🔍 Търси по име или цвят" value="{{ request.args.get('q', '') }}">
+    <button type="submit">Търсене</button>
+  </form>
+
+  <form method="get" action="{{ url_for('catalog.catalog') }}">
+    <input type="number" step="0.01" name="min_price" placeholder="Мин. цена" value="{{ request.args.get('min_price', '') }}">
+    <input type="number" step="0.01" name="max_price" placeholder="Макс. цена" value="{{ request.args.get('max_price', '') }}">
+    <input type="number" name="size" placeholder="Размер" value="{{ request.args.get('size', '') }}">
+    <label><input type="checkbox" name="in_stock" value="1" {% if request.args.get('in_stock') %}checked{% endif %}> В наличност</label>
+    <button type="submit">Филтрирай</button>
+  </form>
+</div>
+
+<hr>
+
+{% if products %}
+  <div class="product-container">
+    {% for p in products %}
+      <div class="product-card">
+        <h4>{{ p.name }}</h4>
+        <p><b>Цвят:</b> {{ p.color }}</p>
+        <p><b>Цена:</b> {{ p.price }} лв.</p>
+        <p><b>Описание:</b> {{ p.description }}</p>
+        <p><b>Размери:</b> {{ p.sizes|join(", ") }}</p>
+        <p><b>Наличност:</b> {{ p.stock }}</p>
+
+        <form action="{{ url_for('cart.add_to_cart', product_id=p.id) }}" method="post">
+          <label>Брой:</label>
+          <input type="number" name="quantity" value="1" min="1" style="width:50px;">
+          <button type="submit">Добави в кошницата</button>
+        </form>
+
+        {% if is_admin %}
+          <div class="admin-links">
+            <a href="{{ url_for('catalog.edit_product', product_id=p.id) }}">✏️ Редактирай</a> |
+            <a href="{{ url_for('catalog.delete_product', product_id=p.id) }}">🗑️ Изтрий</a>
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p><b>❌ Няма намерени продукти по зададените критерии.</b></p>
+{% endif %}
+
+{% if is_admin %}
+  <hr>
+  {% if show_add_form %}
+    <h3>➕ Добави продукт</h3>
+    <form method="POST">
+      Име: <input type="text" name="name" required><br><br>
+      Описание: <textarea name="description" required></textarea><br><br>
+      Цвят: <input type="text" name="color" required><br><br>
+      Размери (разделени със запетая): <input type="text" name="sizes" required><br><br>
+      Цена: <input type="number" step="0.01" name="price" required><br><br>
+      Наличност: <input type="number" name="stock" required><br><br>
+      <button type="submit">Добави</button>
+    </form>
+  {% elif edit_product %}
+    <h3>✏️ Редактирай продукт</h3>
+    <form method="POST">
+      Име: <input type="text" name="name" value="{{ edit_product.name }}" required><br><br>
+      Описание: <textarea name="description" required>{{ edit_product.description }}</textarea><br><br>
+      Цвят: <input type="text" name="color" value="{{ edit_product.color }}" required><br><br>
+      Размери (разделени със запетая): <input type="text" name="sizes" value="{{ edit_product.sizes|join(',') }}" required><br><br>
+      Цена: <input type="number" step="0.01" name="price" value="{{ edit_product.price }}" required><br><br>
+      Наличност: <input type="number" name="stock" value="{{ edit_product.stock }}" required><br><br>
+      <button type="submit">Запази</button>
+    </form>
+  {% else %}
+    <p><a href="{{ url_for('catalog.add_product') }}">➕ Добави нов продукт</a></p>
+  {% endif %}
+{% endif %}
+
+{% endblock %}
