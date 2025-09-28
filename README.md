@@ -1,0 +1,3 @@
+1. **Class Diagram:** [View Class Diagram](https://lucid.app/lucidchart/0074ea16-203f-4a59-95bc-f7f2c7b2f7f2/edit?viewport_loc=249%2C-27%2C2301%2C1051%2CHWEp-vi-RSFO&invitationId=inv_d76e7dac-ee7f-49a7-8b47-aa57b9c8ffc5)
+2. **Entity-Relationship Diagram:** [View Entity-Relationship Diagram](https://lucid.app/lucidchart/3c35a866-abdf-4141-853f-cd4623c82c36/edit?viewport_loc=-1163%2C-154%2C1552%2C709%2C0_0&invitationId=inv_acb937f3-8593-4a7b-94fc-e43c0b7ce775)
+3. **Use Case Diagram:** [View Use Case Diagram](https://lucid.app/lucidchart/c40a098b-eb2f-4805-9452-531b4dac88e8/edit?viewport_loc=-2125%2C-644%2C4657%2C2126%2C.Q4MUjXso07N&invitationId=inv_40816132-bcb2-4f21-a188-92aeab66fb31)
