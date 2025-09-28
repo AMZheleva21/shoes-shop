@@ -8,13 +8,13 @@
       <li>
         {{ item.product.name }} ({{ item.product.color }}) -
         {{ item.quantity }} бр. × {{ item.product.price }} лв. = {{ item.quantity * item.product.price }} лв.
-        <a href="{{ url_for('cart.remove_from_cart', product_id=item.product.id) }}">❌ Премахни</a>
+        <a href="{{ url_for('cart.remove_from_cart', product_id=item.product.id) }}"> Премахни</a>
       </li>
     {% endfor %}
   </ul>
   <p><b>Обща сума: {{ total }} лв.</b></p>
   <p>
-  <a href="{{ url_for('cart.checkout') }}" class="order-button">🛍️ Поръчай сега</a>
+  <a href="{{ url_for('cart.checkout') }}" class="order-button"> Поръчай сега</a>
 </p>
 {% else %}
   <p>Кошницата е празна.</p>

@@ -4,7 +4,7 @@
 
 <div class="search-filter-box">
   <form method="get" action="{{ url_for('catalog.catalog') }}">
-    <input type="text" name="q" placeholder="🔍 Търси по име или цвят" value="{{ request.args.get('q', '') }}">
+    <input type="text" name="q" placeholder="Търсене по име или цвят" value="{{ request.args.get('q', '') }}">
     <button type="submit">Търсене</button>
   </form>
 
@@ -38,21 +38,21 @@
 
         {% if is_admin %}
           <div class="admin-links">
-            <a href="{{ url_for('catalog.edit_product', product_id=p.id) }}">✏️ Редактирай</a> |
-            <a href="{{ url_for('catalog.delete_product', product_id=p.id) }}">🗑️ Изтрий</a>
+            <a href="{{ url_for('catalog.edit_product', product_id=p.id) }}"> Редактирай</a> |
+            <a href="{{ url_for('catalog.delete_product', product_id=p.id) }}"> Изтрий</a>
           </div>
         {% endif %}
       </div>
     {% endfor %}
   </div>
 {% else %}
-  <p><b>❌ Няма намерени продукти по зададените критерии.</b></p>
+  <p><b> Няма намерени продукти по зададените критерии.</b></p>
 {% endif %}
 
 {% if is_admin %}
   <hr>
   {% if show_add_form %}
-    <h3>➕ Добави продукт</h3>
+    <h3> Добави продукт</h3>
     <form method="POST">
       Име: <input type="text" name="name" required><br><br>
       Описание: <textarea name="description" required></textarea><br><br>
@@ -63,7 +63,7 @@
       <button type="submit">Добави</button>
     </form>
   {% elif edit_product %}
-    <h3>✏️ Редактирай продукт</h3>
+    <h3> Редактирай продукт</h3>
     <form method="POST">
       Име: <input type="text" name="name" value="{{ edit_product.name }}" required><br><br>
       Описание: <textarea name="description" required>{{ edit_product.description }}</textarea><br><br>
@@ -74,7 +74,7 @@
       <button type="submit">Запази</button>
     </form>
   {% else %}
-    <p><a href="{{ url_for('catalog.add_product') }}">➕ Добави нов продукт</a></p>
+    <p><a href="{{ url_for('catalog.add_product') }}"> Добави нов продукт</a></p>
   {% endif %}
 {% endif %}
 

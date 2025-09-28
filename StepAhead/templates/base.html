@@ -13,8 +13,8 @@
           <a href="{{ url_for('catalog.catalog') }}"><strong> Начало</strong></a>
         </div>
         <div>
-          👋 Здравей, {{ session["email"] }} |
-          <a href="{{ url_for('cart.view_cart') }}">🛒 Кошница</a> |
+          Здравей, {{ session["email"] }} |
+          <a href="{{ url_for('cart.view_cart') }}">Кошница</a> |
           <a href="{{ url_for('auth.logout') }}"> Изход</a>
         </div>
       </nav>
