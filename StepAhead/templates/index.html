@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <title>Начална страница</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Добре дошли в "Step Ahead" - Вашият онлайн магазин за обувки!</h1>
+
+    <a href="{{ url_for('auth.login') }}"><button>Вход</button></a>
+    <a href="{{ url_for('auth.register') }}"><button>Регистрация</button></a>
+
+
+</body>
+</html>
