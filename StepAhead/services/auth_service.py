@@ -1,4 +1,5 @@
 from flask import session
+from abc import ABC, abstractmethod
 
 class User:
     def __init__(self, email, password, is_admin=False):
@@ -22,6 +23,21 @@ class Customer(User):
     def __init__(self, email, password):
         super().__init__(email, password, is_admin=False)
 
+class UserRole(ABC):
+    @abstractmethod
+    def get_role_description(self):
+        pass
+
+class AdminRole(UserRole):
+    def get_role_description(self):
+        return "Администратор с пълни права"
+
+class CustomerRole(UserRole):
+    def get_role_description(self):
+        return "Клиент с права за пазаруване"
+
+def display_role_info(role):
+    print(role.get_role_description())
 
 users = [
     Admin("admin@example.com", "admin123")

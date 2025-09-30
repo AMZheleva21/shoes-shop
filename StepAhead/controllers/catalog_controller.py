@@ -3,28 +3,45 @@ from services import catalog_service
 from services.auth_service import is_admin
 catalog_bp = Blueprint("catalog", __name__)
 
-@catalog_bp.route("/", methods=["GET", "POST"])
+@catalog_bp.route("/", methods=["GET"])
 def catalog():
     query = request.args.get("q", "")
     min_price = request.args.get("min_price")
     max_price = request.args.get("max_price")
     size = request.args.get("size")
     in_stock = request.args.get("in_stock")
+    category = request.args.get("category")
+    subcategory = request.args.get("subcategory")
+    sort_by = request.args.get("sort_by", "price")
+    order = request.args.get("order", "asc")
 
     products = catalog_service.get_all_products()
 
     if query:
         products = catalog_service.search_products(query)
 
-    if min_price or max_price or size or in_stock:
+    if min_price or max_price or size or in_stock or category or subcategory:
         products = catalog_service.filter_products(
             min_price=float(min_price) if min_price else None,
             max_price=float(max_price) if max_price else None,
             size=int(size) if size else None,
             in_stock=True if in_stock else None,
+            category=category if category else None,
+            subcategory=subcategory if subcategory else None,
         )
 
-    return render_template("catalog.html", products=products, is_admin=is_admin(), query=query)
+    products = catalog_service.sort_products(products, by=sort_by, descending=(order == "desc"))
+
+    return render_template(
+        "catalog.html",
+        products=products,
+        is_admin=is_admin(),
+        query=query,
+        selected_category=category,
+        selected_subcategory=subcategory,
+        sort_by=sort_by,
+        order=order
+    )
 
 @catalog_bp.route("/add", methods=["GET", "POST"])
 def add_product():
