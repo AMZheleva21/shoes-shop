@@ -2,34 +2,62 @@
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Step Ahead</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
   {% if session.get("email") %}
     <header>
-      <nav style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background-color: #f0f0f0;">
-        <div>
-          <a href="{{ url_for('catalog.catalog') }}"><strong> Начало</strong></a>
+      <nav>
+        <div class="nav-main">
+          <a href="{{ url_for('catalog.catalog') }}"><strong>Начало</strong></a>
+
+          <div class="dropdown">
+            <a href="#">Мъжки</a>
+            <div class="dropdown-content">
+              <a href="{{ url_for('catalog.catalog', category='мъжки', subcategory='спортни') }}">Спортни</a>
+              <a href="{{ url_for('catalog.catalog', category='мъжки', subcategory='официални') }}">Официални</a>
+              <a href="{{ url_for('catalog.catalog', category='мъжки', subcategory='ежедневни') }}">Ежедневни</a>
+            </div>
+          </div>
+
+          <div class="dropdown">
+            <a href="#">Женски</a>
+            <div class="dropdown-content">
+              <a href="{{ url_for('catalog.catalog', category='женски', subcategory='спортни') }}">Спортни</a>
+              <a href="{{ url_for('catalog.catalog', category='женски', subcategory='официални') }}">Официални</a>
+              <a href="{{ url_for('catalog.catalog', category='женски', subcategory='ежедневни') }}">Ежедневни</a>
+            </div>
+          </div>
+
+          <div class="dropdown">
+            <a href="#">Детски</a>
+            <div class="dropdown-content">
+              <a href="{{ url_for('catalog.catalog', category='детски', subcategory='спортни') }}">Спортни</a>
+              <a href="{{ url_for('catalog.catalog', category='детски', subcategory='официални') }}">Официални</a>
+              <a href="{{ url_for('catalog.catalog', category='детски', subcategory='ежедневни') }}">Ежедневни</a>
+            </div>
+          </div>
         </div>
-        <div>
-           Здравей, {{ session["email"] }} |
-          <a href="{{ url_for('cart.view_cart') }}">Кошница</a> |
-          <a href="{{ url_for('auth.logout') }}"> Изход</a>
+
+        <div class="nav-user">
+          <span>Здравей, {{ session["email"] }}</span>
+          <a href="{{ url_for('cart.view_cart') }}">Кошница</a>
+          <a href="{{ url_for('auth.logout') }}">Изход</a>
         </div>
       </nav>
-      <hr>
     </header>
   {% endif %}
 
   <main>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
-        <ul style="color: #000000;">
+        <div class="flash-messages">
           {% for msg in messages %}
-            <li>{{ msg }}</li>
+            <div class="flash">{{ msg }}</div>
           {% endfor %}
-        </ul>
+        </div>
       {% endif %}
     {% endwith %}
 

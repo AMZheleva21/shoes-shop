@@ -2,15 +2,18 @@
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
-    <title>Начална страница</title>
+    <title>Step Ahead</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Добре дошли в "Step Ahead" - Вашият онлайн магазин за обувки!</h1>
+    <div class="welcome-container">
+        <h1>Добре дошли в "Step Ahead"!</h1>
+        <p class="welcome-subtitle">Вашият онлайн магазин за обувки!</p>
 
-    <a href="{{ url_for('auth.login') }}"><button>Вход</button></a>
-    <a href="{{ url_for('auth.register') }}"><button>Регистрация</button></a>
-
-
+        <div class="welcome-buttons">
+            <a href="{{ url_for('auth.login') }}" class="welcome-btn">Вход</a>
+            <a href="{{ url_for('auth.register') }}" class="welcome-btn">Регистрация</a>
+        </div>
+    </div>
 </body>
 </html>

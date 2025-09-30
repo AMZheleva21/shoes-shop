@@ -1,23 +1,44 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Моята кошница</h2>
+<div class="cart-container">
+    <h2>Моята кошница</h2>
 
-{% if cart %}
-  <ul>
-    {% for item in cart %}
-      <li>
-        {{ item.product.name }} ({{ item.product.color }}) -
-        {{ item.quantity }} бр. × {{ item.product.price }} лв. = {{ item.quantity * item.product.price }} лв.
-        <a href="{{ url_for('cart.remove_from_cart', product_id=item.product.id) }}"> Премахни</a>
-      </li>
-    {% endfor %}
-  </ul>
-  <p><b>Обща сума: {{ total }} лв.</b></p>
-  <p>
-  <a href="{{ url_for('cart.checkout') }}" class="order-button"> Поръчай сега</a>
-</p>
-{% else %}
-  <p>Кошницата е празна.</p>
-{% endif %}
+    {% if cart %}
+    <div class="cart-items">
+        {% for item in cart %}
+        <div class="cart-item">
+            <div class="item-info">
+                <h4>{{ item.product.name }}</h4>
+                <p class="item-color">Цвят: {{ item.product.color }}</p>
+                <p class="item-category">Категория: {{ item.product.category }} / {{ item.product.subcategory }}</p>
+            </div>
+            <div class="item-quantity">
+                <span class="quantity-text">Количество: {{ item.quantity }} бр.</span>
+            </div>
+            <div class="item-price">
+                <span class="price">{{ item.product.price }} лв. × {{ item.quantity }} = {{ item.quantity * item.product.price }} лв.</span>
+            </div>
+            <div class="item-actions">
+                <a href="{{ url_for('cart.remove_from_cart', product_id=item.product.id) }}" class="remove-btn">Премахни</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="cart-summary">
+        <div class="total-amount">
+            <h3>Обща сума: {{ total }} лв.</h3>
+        </div>
+        <div class="checkout-actions">
+            <a href="{{ url_for('cart.checkout') }}" class="checkout-btn">Поръчай сега</a>
+            <a href="{{ url_for('catalog.catalog') }}" class="continue-shopping">Продължи пазаруването</a>
+        </div>
+    </div>
+    {% else %}
+    <div class="empty-cart">
+        <p>Кошницата е празна.</p>
+        <a href="{{ url_for('catalog.catalog') }}" class="continue-shopping">Започни пазаруването</a>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}
-
