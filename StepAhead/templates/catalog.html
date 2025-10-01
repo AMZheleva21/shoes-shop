@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Каталог с обувки</h2>
-
 <div class="search-box">
   <form method="get" action="{{ url_for('catalog.catalog') }}">
     <input type="text" name="q" placeholder="Търсене по име или цвят"
@@ -9,6 +7,7 @@
     <button type="submit">Търсене</button>
   </form>
 </div>
+
 
 <div class="catalog-layout">
 
@@ -62,6 +61,10 @@
       <div class="product-grid">
         {% for p in products %}
           <div class="product-card">
+          {% if p.image_url %}
+    <img src="{{ p.image_url }}" alt="{{ p.name }}"
+         style="width:100%; height:200px; object-fit:cover; border-radius:8px; margin-bottom:10px;">
+  {% endif %}
             <h4>{{ p.name }}</h4>
             <p><b>Цвят:</b> {{ p.color }}</p>
             <p><b>Цена:</b> {{ p.price }} лв.</p>
@@ -90,4 +93,63 @@
     {% endif %}
   </section>
 </div>
+    {% if is_admin and show_add_form %}
+<div class="add-product-wrapper">
+  <div class="add-product-form">
+    <h3>Добавяне на нов продукт</h3>
+    <form method="post" action="{{ url_for('catalog.catalog') }}">
+      <div class="form-group">
+        <label>Име:</label>
+        <input type="text" name="name" required>
+      </div>
+
+      <div class="form-group">
+        <label>Описание:</label>
+        <textarea name="description" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Цвят:</label>
+        <input type="text" name="color" required>
+      </div>
+
+      <div class="form-group">
+        <label>Размери (38,39,40):</label>
+        <input type="text" name="sizes" placeholder="38,39,40" required>
+      </div>
+
+      <div class="form-group">
+        <label>Цена:</label>
+        <input type="number" step="0.01" name="price" required>
+      </div>
+
+      <div class="form-group">
+        <label>Наличност:</label>
+        <input type="number" name="stock" required>
+      </div>
+
+      <div class="form-group">
+        <label>Категория:</label>
+        <select name="category" required>
+          <option value="мъжки">Мъжки</option>
+          <option value="женски">Женски</option>
+          <option value="детски">Детски</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Подкатегория:</label>
+        <select name="subcategory" required>
+          <option value="спортни">Спортни</option>
+          <option value="официални">Официални</option>
+          <option value="ежедневни">Ежедневни</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-submit">Добави продукт</button>
+    </form>
+  </div>
+</div>
+{% endif %}
+
 {% endblock %}

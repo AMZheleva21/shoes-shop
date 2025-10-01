@@ -3,8 +3,27 @@ from services import catalog_service
 from services.auth_service import is_admin
 catalog_bp = Blueprint("catalog", __name__)
 
-@catalog_bp.route("/", methods=["GET"])
+@catalog_bp.route("/", methods=["GET", "POST"])
 def catalog():
+    if request.method == "POST":
+        if not is_admin():
+            flash("Нямате достъп до добавяне на продукти.")
+            return redirect(url_for("catalog.catalog"))
+
+        name = request.form["name"]
+        description = request.form["description"]
+        color = request.form["color"]
+        sizes = [int(s) for s in request.form["sizes"].split(",")]
+        price = float(request.form["price"])
+        stock = int(request.form["stock"])
+        category = request.form["category"]
+        subcategory = request.form["subcategory"]
+        image_url = request.form.get("image_url")
+
+        catalog_service.add_product(name, description, color, sizes, price, stock, category, subcategory,image_url)
+        flash("Продуктът е добавен успешно.")
+        return redirect(url_for("catalog.catalog"))
+
     query = request.args.get("q", "")
     min_price = request.args.get("min_price")
     max_price = request.args.get("max_price")
@@ -40,8 +59,10 @@ def catalog():
         selected_category=category,
         selected_subcategory=subcategory,
         sort_by=sort_by,
-        order=order
+        order=order,
+        show_add_form=True,
     )
+
 
 @catalog_bp.route("/add", methods=["GET", "POST"])
 def add_product():
