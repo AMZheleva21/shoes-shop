@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <title>Поръчка №{{ order_id }}</title>
+    <style>
+        body { font-family: DejaVu Sans, sans-serif; margin: 40px; }
+        h1 { text-align: center; color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #999; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .total { text-align: right; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Поръчка №{{ order_id }}</h1>
+    <p><strong>Дата:</strong> {{ order_data.date }}</p>
+    <p><strong>Метод на плащане:</strong> {{ order_data.payment_method }}</p>
+    <p><strong>Адрес за доставка:</strong> {{ order_data.delivery_address }}</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Продукт</th>
+                <th>Описание</th>
+                <th>Цена (лв.)</th>
+                <th>Брой</th>
+                <th>Общо</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order_data.items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.description }}</td>
+                <td>{{ "%.2f"|format(item.price) }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ "%.2f"|format(item.price * item.quantity) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p class="total">Обща сума: <strong>{{ "%.2f"|format(order_data.total) }} лв.</strong></p>
+</body>
+</html>

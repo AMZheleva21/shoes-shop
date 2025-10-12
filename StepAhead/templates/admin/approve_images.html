@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Одобрение на профилни снимки{% endblock %}
+
+{% block content %}
+<h2 style="text-align:center; margin-bottom:20px;">Профилни снимки, чакащи одобрение</h2>
+
+{% if users %}
+    <table style="width:100%; border-collapse:collapse; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+        <thead style="background-color:#73a7ea; color:white;">
+            <tr>
+                <th style="padding:12px; text-align:left;">Имейл</th>
+                <th style="padding:12px; text-align:left;">Снимка</th>
+                <th style="padding:12px; text-align:left;">Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr style="border-bottom:1px solid #ddd;">
+                    <td style="padding:10px;">{{ user.email }}</td>
+                    <td style="padding:10px;">
+                        {% if user.profile_image %}
+                            <img src="{{ user.profile_image }}" alt="Profile Image" style="width:80px; height:80px; object-fit:cover; border-radius:50%; border:1px solid #ccc;">
+                        {% else %}
+                            <span style="color:#888;">Няма снимка</span>
+                        {% endif %}
+                    </td>
+                    <td style="padding:10px;">
+                        <a href="{{ url_for('admin.approve_image', user_id=user.id) }}" style="text-decoration:none; color:white; background-color:#73a7ea; padding:6px 12px; border-radius:5px;">Одобри</a>
+                        <a href="{{ url_for('admin.reject_image', user_id=user.id) }}" style="text-decoration:none; color:white; background-color:#73a7ea; padding:6px 12px; border-radius:5px; margin-left:5px;">Отхвърли</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p style="text-align:center; color:#555; margin-top:20px;">Няма снимки за одобрение.</p>
+{% endif %}
+{% endblock %}

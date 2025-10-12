@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Моят профил{% endblock %}
+
+{% block content %}
+<h2 class="profile-title">Моят профил</h2>
+
+<form method="POST" enctype="multipart/form-data" class="profile-form">
+    <div class="form-group">
+        <label>Имейл:</label>
+        <input type="email" name="email" value="{{ user.email }}" required>
+    </div>
+
+    <div class="form-group">
+        <label>Нова парола:</label>
+        <input type="password" name="password" placeholder="Оставете празно, ако не искате да сменяте">
+    </div>
+
+    <div class="form-group">
+        <label>Профилна снимка:</label>
+        {% if user.profile_image %}
+            <img src="{{ user.profile_image }}" alt="Profile Image" class="profile-image">
+            <p>Статус: <span class="image-status">{{ user.image_status }}</span></p>
+        {% endif %}
+        <input type="file" name="profile_image" accept="image/*">
+    </div>
+
+    <button type="submit" class="btn-update">Обнови профила</button>
+</form>
+{% endblock %}

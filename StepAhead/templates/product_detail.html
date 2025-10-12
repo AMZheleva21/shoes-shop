@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="product-detail-container">
+    <h2>{{ product.name }}</h2>
+
+    {% if product.image_url %}
+        <img src="{{ product.image_url }}" alt="{{ product.name }}" style="width:300px; height:300px; object-fit:cover;">
+    {% endif %}
+
+    <p><b>Описание:</b> {{ product.description }}</p>
+    <p><b>Цвят:</b> {{ product.color }}</p>
+    <p><b>Размери:</b> {{ product.sizes }}</p>
+    <p><b>Категория:</b> {{ product.category }}</p>
+    <p><b>Подкатегория:</b> {{ product.subcategory }}</p>
+    <p><b>Налично количество:</b> {{ product.stock }}</p>
+    <p><b>Цена:</b> {{ product.price }} лв.</p>
+    <p><b>Среден рейтинг:</b> {{ average_rating }} / 5</p>
+
+    <form action="{{ url_for('cart.add_to_cart', product_id=product.id) }}" method="post">
+        <label>Брой:</label>
+        <input type="number" name="quantity" value="1" min="1" max="{{ product.stock }}">
+        <button type="submit">Добави в кошницата</button>
+    </form>
+
+    <hr>
+    <h3>Отзиви</h3>
+    {% for review in reviews %}
+        <div class="review">
+            <p><b>{{ review.user_email }}</b> - {{ review.rating }}/5</p>
+            <p>{{ review.comment }}</p>
+            <small>{{ review.created_at.strftime('%d.%m.%Y %H:%M') }}</small>
+        </div>
+        <hr>
+    {% else %}
+        <p>Все още няма отзиви за този продукт.</p>
+    {% endfor %}
+
+    {% if session.get('email') %}
+    <h4>Остави отзив</h4>
+    <form method="post" action="{{ url_for('catalog.product_detail', product_id=product.id) }}">
+        <label>Рейтинг (1-5):</label>
+        <input type="number" name="rating" min="1" max="5" required>
+        <br>
+        <label>Коментар:</label>
+        <textarea name="comment" required></textarea>
+        <br>
+        <button type="submit">Публикувай</button>
+    </form>
+    {% else %}
+        <p><a href="{{ url_for('auth.login') }}">Влезте</a>, за да оставите коментар.</p>
+    {% endif %}
+
+    <a href="{{ url_for('catalog.catalog') }}"> Обратно към каталога</a>
+</div>
+{% endblock %}

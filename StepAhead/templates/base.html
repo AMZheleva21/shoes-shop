@@ -43,7 +43,11 @@
 
         <div class="nav-user">
           <span>Здравей, {{ session["email"] }}</span>
+          <a href="{{ url_for('auth.profile') }}">Моят профил</a>
           <a href="{{ url_for('cart.view_cart') }}">Кошница</a>
+          {% if session.get('is_admin') %}
+            <a href="{{ url_for('admin.approve_images') }}">Админ панел</a>
+          {% endif %}
           <a href="{{ url_for('auth.logout') }}">Изход</a>
         </div>
       </nav>

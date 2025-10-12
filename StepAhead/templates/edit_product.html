@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Редактиране на продукт{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Редактиране на продукт</h1>
+    <form action="{{ url_for('catalog.edit_product', product_id=product.id) }}" method="POST">
+        <div class="form-group">
+            <label for="name">Име на продукта</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ product.name }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Описание</label>
+            <textarea class="form-control" id="description" name="description" rows="4" required>{{ product.description }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="color">Цвят</label>
+            <input type="text" class="form-control" id="color" name="color" value="{{ product.color }}">
+        </div>
+
+        <div class="form-group">
+            <label for="sizes">Размери (разделени със запетаи)</label>
+            <input type="text" class="form-control" id="sizes" name="sizes" value="{{ product.sizes | join(', ') }}">
+        </div>
+
+        <div class="form-group">
+            <label for="price">Цена (BGN)</label>
+            <input type="number" class="form-control" id="price" name="price" step="0.01" value="{{ product.price }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="stock">Наличност</label>
+            <input type="number" class="form-control" id="stock" name="stock" value="{{ product.stock }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="category">Категория</label>
+            <select class="form-control" id="category" name="category" required>
+                <option value="">Изберете категория</option>
+                <option value="обувки" {% if product.category == 'обувки' %}selected{% endif %}>Обувки</option>
+                <option value="дрехи" {% if product.category == 'дрехи' %}selected{% endif %}>Дрехи</option>
+                <option value="аксесоари" {% if product.category == 'аксесоари' %}selected{% endif %}>Аксесоари</option>
+                <option value="друго" {% if product.category == 'друго' %}selected{% endif %}>Друго</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="subcategory">Подкатегория</label>
+            <input type="text" class="form-control" id="subcategory" name="subcategory" value="{{ product.subcategory }}">
+        </div>
+
+        <div class="form-group">
+            <label for="image_url">URL на изображение</label>
+            <input type="text" class="form-control" id="image_url" name="image_url" value="{{ product.image_url }}">
+        </div>
+
+        <div class="form-group mt-3">
+            <button type="submit" class="btn btn-success">Запази промените</button>
+            <a href="{{ url_for('catalog.delete_product', product_id=product.id) }}" class="btn btn-danger"
+               onclick="return confirm('Сигурни ли сте, че искате да изтриете този продукт?');">Изтрий продукта</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
