@@ -1,4 +1,5 @@
 import os
+from abc import ABC,abstractmethod
 from flask import current_app, session
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -26,6 +27,21 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+class UserRole(ABC):
+    @abstractmethod
+    def get_role_description(self):
+        pass
+
+class AdminRole(UserRole):
+    def get_role_description(self):
+        return "Администратор с пълни права"
+
+class CustomerRole(UserRole):
+    def get_role_description(self):
+        return "Клиент с права за пазаруване"
+
+def display_role_info(role):
+    print(role.get_role_description())
 
 def is_admin():
     return session.get("is_admin", False)
