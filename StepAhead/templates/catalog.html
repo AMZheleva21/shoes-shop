@@ -70,7 +70,7 @@
             <p><b>Цвят:</b> {{ p.color }}</p>
             <p><b>Цена:</b> {{ p.price }} лв.</p>
             <p><b>Описание:</b> {{ p.description }}</p>
-            <p><b>Размери:</b> {{ p.sizes.replace(',', ', ') }}</p>
+            <p><b>Размери:</b> {{ p.sizes.replace(',', ', ') if p.sizes else 'Не са посочени размери' }}</p>
             <p><b>Наличност:</b> {{ p.stock }}</p>
             <p><b>Категория:</b> {{ p.category }} / {{ p.subcategory }}</p>
 

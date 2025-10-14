@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 style="text-align:center;">Добави промоция за колекция</h2>
+
+<form method="POST" style="max-width:600px; margin:auto;">
+  <div class="mb-3">
+    <label class="form-label">Категория:</label>
+    <select name="category" class="form-control" required>
+      <option value="">-- Избери категория --</option>
+      <option value="мъжки">Мъжки</option>
+      <option value="женски">Женски</option>
+      <option value="детски">Детски</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Тип обувки:</label>
+    <select name="subcategory" class="form-control" required>
+      <option value="">-- Избери тип --</option>
+      <option value="спортни">Спортни</option>
+      <option value="официални">Официални</option>
+      <option value="ежедневни">Ежедневни</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Заглавие на промоцията:</label>
+    <input type="text" name="title" class="form-control" placeholder="Например: Специална оферта" required>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Описание:</label>
+    <textarea name="description" class="form-control" rows="3" placeholder="Описание на промоцията..."></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Отстъпка (%):</label>
+    <input type="number" name="discount" class="form-control" min="1" max="100" required>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Начална дата:</label>
+    <input type="date" name="start_date" class="form-control" required>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Крайна дата:</label>
+    <input type="date" name="end_date" class="form-control" required>
+  </div>
+
+  <div class="d-grid gap-2">
+    <button type="submit" class="btn btn-success">Създай промоция за колекцията</button>
+    <a href="{{ url_for('promo.promo_calendar') }}" class="btn btn-secondary">Отказ</a>
+  </div>
+</form>
+{% endblock %}
