@@ -608,3 +608,11 @@ nav {
     background-color: #73a7ea !important;
     border-color: #73a7ea !important;
   }
+
+  main {
+      background-color: #d1e0f6;
+  }
+
+  #calendar {
+      background-color: #ffffff
+  }

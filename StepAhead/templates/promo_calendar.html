@@ -2,11 +2,11 @@
 {% block content %}
 
 <h2 style="text-align:center;">Календар</h2>
-   {% if is_admin %}
-<div style="text-align: center; margin: 20px 0;">
-    <a href="{{ url_for('promo.add_promo') }}" class="btn btn-success" style="background-color: #3498db; border-color: #5d8be6;">Добави промоция за колекция
-    </a>
-</div>
+
+{% if is_admin %}
+   <div style="text-align: center; margin: 20px 0;">
+    <a href="{{ url_for('promo.add_promo') }}" class="btn btn-success" style="background-color: #3498db; border-color: #5d8be6;">Добави промоция за колекция</a>
+   </div>
 {% endif %}
 
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">

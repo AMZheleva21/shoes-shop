@@ -42,7 +42,7 @@
         </div>
 
         <div class="nav-user">
-          <span>Здравей, {{ session["email"] }}</span>
+
           <a href="{{ url_for('auth.profile') }}">Профил</a>
           <a href="{{ url_for('cart.view_cart') }}">Кошница</a>
         <a href="{{ url_for('promo.promo_calendar') }}" class="nav-link">Календар</a>
