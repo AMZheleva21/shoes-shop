@@ -9,8 +9,8 @@ class Promotion(db.Model):
     discount = db.Column(db.Integer, nullable=False)
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
-    category = db.Column(db.String(100), nullable=False)  # задължително
-    subcategory = db.Column(db.String(100), nullable=False)  # задължително
+    category = db.Column(db.String(100), nullable=False)
+    subcategory = db.Column(db.String(100), nullable=False)
 
     def to_dict(self):
         return {

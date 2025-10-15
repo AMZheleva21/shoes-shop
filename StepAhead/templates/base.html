@@ -48,7 +48,9 @@
         <a href="{{ url_for('promo.promo_calendar') }}" class="nav-link">Календар</a>
           {% if session.get('is_admin') %}
             <a href="{{ url_for('admin.approve_images') }}">Админ панел</a>
+            <a href="{{ url_for('admin.last_buyer') }}">Последен купувач</a>
           {% endif %}
+
           <a href="{{ url_for('auth.logout') }}">Изход</a>
         </div>
       </nav>

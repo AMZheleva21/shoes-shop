@@ -12,6 +12,7 @@ class Order(db.Model):
     total = db.Column(db.Float, nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
+
 class OrderItem(db.Model):
     __tablename__ = "order_items"
     __table_args__ = {'extend_existing': True}
@@ -22,6 +23,7 @@ class OrderItem(db.Model):
     product_name = db.Column(db.String(200), nullable=False)
     price = db.Column(db.Float, nullable=False)
     quantity = db.Column(db.Integer, default=1)
+
 
 def create_order(user_email, address, payment_method):
     cart_items = get_cart(user_email)
@@ -85,3 +87,25 @@ def get_order_with_items(order_id, user_email):
         ]
     }
     return order_data
+
+
+def get_last_buyer_by_product_name(keyword):
+    result = (
+        db.session.query(Order.user_email, Order.created_at, Product.name, Product.category)
+        .join(OrderItem, OrderItem.order_id == Order.id)
+        .join(Product, Product.id == OrderItem.product_id)
+        .filter(Product.name.ilike(f"%{keyword}%"))
+        .order_by(Order.created_at.desc())
+        .first()
+    )
+
+    if not result:
+        return None
+
+    return {
+        "email": result[0],
+        "date": result[1],
+        "product": result[2],
+        "category": result[3],
+        "keyword": keyword.capitalize()
+    }

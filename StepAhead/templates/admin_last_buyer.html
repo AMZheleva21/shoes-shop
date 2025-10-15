@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="search-page">
+    <h2>Последен купувач по име на продукт</h2>
+
+    <form method="POST" class="search-form">
+        <div class="form-group">
+            <label for="keyword">Търси по дума (например Nike, Adidas, Puma...):</label>
+            <div class="input-group">
+                <input type="text" id="keyword" name="keyword" placeholder="Nike" required value="{{ request.form.keyword if request.form.keyword }}">
+                <button type="submit" class="btn-search">
+                    <i class="fas fa-search"></i> Търсене
+                </button>
+            </div>
+        </div>
+    </form>
+
+    {% if result %}
+    <div class="search-results">
+        <h3>Резултат:</h3>
+        <div class="result-card">
+            <div class="result-item">
+                <span class="label">Ключова дума:</span>
+                <span class="value">{{ result.keyword }}</span>
+            </div>
+            <div class="result-item">
+                <span class="label">Продукт:</span>
+                <span class="value">{{ result.product }}</span>
+            </div>
+            <div class="result-item">
+                <span class="label">Категория:</span>
+                <span class="value">{{ result.category }}</span>
+            </div>
+            <div class="result-item">
+                <span class="label">Потребител:</span>
+                <span class="value">{{ result.email }}</span>
+            </div>
+            <div class="result-item">
+                <span class="label">Дата на покупката:</span>
+                <span class="value">{{ result.date.strftime('%d.%m.%Y %H:%M') }}</span>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{%endblock %}
